@@ -1,0 +1,51 @@
+plugins {
+	id 'org.springframework.boot' version '2.7.1'
+	// 'io.spring.dependency-management' 플러그인 사용하면, 자동으로 spring-boot-starter-parent을 import 해줌
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	//implementation 'org.springframework.boot:spring-boot-starter-security'  //활성화하면 h2 db 로그인 요구됨
+	//testImplementation 'org.springframework.security:spring-security-test'  //활성화하면 h2 db 로그인 요구됨
+	compileOnly 'org.projectlombok:lombok'
+	runtimeOnly 'com.h2database:h2'
+	annotationProcessor 'org.projectlombok:lombok' // getter setter toString .. 등등을 어노테이션을 사용하여 자동으로 생성해주는 도구
+
+	//p6spy ) where id = "요 부분을 보여줌"
+	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.7.1'
+
+	// https://mvnrepository.com/artifact/com.google.code.gson/gson
+	// gson : json 데이터를 변환해주는 라이브러리
+	implementation 'com.google.code.gson:gson:2.9.0'
+
+	implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+
+	implementation 'org.json:json:20190722'
+
+	// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+	//implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.0.1'
+
+
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
