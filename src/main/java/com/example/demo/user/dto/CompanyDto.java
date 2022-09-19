@@ -1,12 +1,15 @@
 package com.example.demo.user.dto;
 
 import com.example.demo.user.domain.Company;
+import com.example.demo.user.domain.User;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 
 @Getter @Setter

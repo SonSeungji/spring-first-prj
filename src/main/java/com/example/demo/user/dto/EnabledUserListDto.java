@@ -12,14 +12,14 @@ import lombok.Setter;
 @Getter @Setter
 @RequiredArgsConstructor
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class UserListDto {
+public class EnabledUserListDto {
 
     //key
     private String userId;
     private ActiveFlg activeFlg;
 
     @Builder
-    private UserListDto(String userId, ActiveFlg activeFlg) {
+    private EnabledUserListDto(String userId, ActiveFlg activeFlg) {
         this.userId = userId;
         this.activeFlg = activeFlg;
     }
@@ -31,8 +31,8 @@ public class UserListDto {
                 .build();
     }
 
-    public static UserListDto toDto(User user){
-        return UserListDto.builder()
+    public static EnabledUserListDto toDto(User user){
+        return EnabledUserListDto.builder()
                 //value
                 .userId(user.getUserId())
                 .activeFlg(user.getActiveFlg())

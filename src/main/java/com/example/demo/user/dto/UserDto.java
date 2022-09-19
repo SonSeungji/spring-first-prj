@@ -24,7 +24,7 @@ public class UserDto {
     private String userPassword;
     private String email;
     private ActiveFlg activeFlg;
-    private List<UserDto> users;
+    //private List<UserDto> users;
     private TeamDto teamTableData;
     private CompanyDto companyTableData;
 
@@ -39,7 +39,7 @@ public class UserDto {
         this.userPassword = userPassword;
         this.email = email;
         this.activeFlg = activeFlg;
-        this.users = users;
+        //this.users = users;
         this.teamTableData = teamTableData;
         this.companyTableData = companyTableData;
     }
@@ -64,11 +64,13 @@ public class UserDto {
     public static UserDto toDto(User user){
         return UserDto.builder()
                 //value
+                .no(user.getNo())
                 .name(user.getName())
+                .userId(user.getUserId())
                 .email(user.getEmail())
                 .activeFlg(user.getActiveFlg())
                 .teamTableData(TeamDto.toDto(user.getTeam())) //FetchType.LAZY
-
+                .companyTableData(CompanyDto.toDto(user.getCompany()))
                 //teamDto.toDto에 user정보+team정보가 있는 userDto를 불러와서 아래처럼 나옴
                 //                              "no": 0,
                                         //    "name": "default",

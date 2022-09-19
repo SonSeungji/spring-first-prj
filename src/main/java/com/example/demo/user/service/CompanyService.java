@@ -14,4 +14,8 @@ public class CompanyService {
     public void createCompany(Company company){
         companyRepository.save(company);
     }
+
+    public Company readCompany(int no){
+        return companyRepository.findById(no).get();
+    }
 }

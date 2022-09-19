@@ -18,15 +18,13 @@ public class TeamAllDataAndUserIdDto {
     //key
     private int no;
     private String name;
-    private UserDto userTableInfo;
-    private String userTableInfoUserID;
+    private String userId;
 
     @Builder
-    public TeamAllDataAndUserIdDto(int no, String name, UserDto userTableInfo, String userTableInfoUserID){
+    public TeamAllDataAndUserIdDto(int no, String name, String userId){
         this.no = no;
         this.name = name;
-        this.userTableInfo = userTableInfo;
-        this.userTableInfoUserID = userTableInfoUserID;
+        this.userId = userId;
     }
 
     public Team toEntity(){
@@ -34,7 +32,6 @@ public class TeamAllDataAndUserIdDto {
                 //value
                 .no(this.no)
                 .name(this.name)
-                .user(this.userTableInfo.toEntity())
                 .build();
     }
 
@@ -43,9 +40,7 @@ public class TeamAllDataAndUserIdDto {
                 //value
                 .no(team.getNo())
                 .name(team.getName())
-                //.userTableInfo(UserAllDataAndTeamIdDto.toDto(team.getName()))
-                //.userTableInfo(team.getUser())
-                .userTableInfoUserID(team.getUser().getUserId())
+                .userId(team.getUser().getUserId())
                 .build();
     }
 }

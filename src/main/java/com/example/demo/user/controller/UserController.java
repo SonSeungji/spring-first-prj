@@ -1,16 +1,13 @@
 package com.example.demo.user.controller;
 
 import com.example.demo.user.domain.User;
-import com.example.demo.user.dto.TeamDto;
 import com.example.demo.user.dto.UserDto;
-import com.example.demo.user.dto.UserListDto;
+import com.example.demo.user.dto.EnabledUserListDto;
 import com.example.demo.user.model.ActiveFlg;
 import com.example.demo.user.model.ListWrapper;
 import com.example.demo.user.service.UserService;
-import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 
-import org.json.simple.JSONObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Controller
@@ -58,9 +54,9 @@ public class UserController {
                 //.filter(user -> user.getUserId().equals(1))
                 .collect(Collectors.toList());
 
-        List<UserListDto> duplicateUserData = new ArrayList();
+        List<EnabledUserListDto> duplicateUserData = new ArrayList();
         for (User userTempData : userService.createUsers(insertUserData)){
-            duplicateUserData.add(UserListDto.toDto(userTempData));
+            duplicateUserData.add(EnabledUserListDto.toDto(userTempData));
         }
         return ResponseEntity.ok().body(duplicateUserData);
     }
@@ -73,9 +69,9 @@ public class UserController {
                 .map(userData -> userData.toEntity())
                 .collect(Collectors.toList());
 
-        List<UserListDto> duplicateUserData = new ArrayList();
+        List<EnabledUserListDto> duplicateUserData = new ArrayList();
         for (User userTempData : userService.createManyUserOneCompany(insertUserData)){
-            duplicateUserData.add(UserListDto.toDto(userTempData));
+            duplicateUserData.add(EnabledUserListDto.toDto(userTempData));
         }
         return ResponseEntity.ok().body(duplicateUserData);
     }
@@ -111,9 +107,9 @@ public class UserController {
     public ResponseEntity updateUserActiveFlg (@RequestParam(name = "active_flg") ActiveFlg activeFlg) {
         List<User> userData = userService.readDisableUser(activeFlg);
 
-        List<UserListDto> userInfoData = new ArrayList();
+        List<EnabledUserListDto> userInfoData = new ArrayList();
         for(User disabledUser:userData){
-            userInfoData.add(UserListDto.toDto(disabledUser));
+            userInfoData.add(EnabledUserListDto.toDto(disabledUser));
         }
         return ResponseEntity.ok().body(userInfoData);
     }
