@@ -140,6 +140,7 @@ public class UserService {
     }
 
 
+
     public void deleteUser(ActiveFlg active_flg, int no) {
         Optional<User> userTableData = userRepository.findById(no);
         userTableData.orElseThrow(RuntimeException::new).deleteUser(active_flg);
