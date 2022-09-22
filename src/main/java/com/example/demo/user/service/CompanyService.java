@@ -41,4 +41,19 @@ public class CompanyService {
 
         return userAndCompanyData;
     }
+
+    public MultiValueMap readCompanyAndUserAll(){
+
+        List<Company> company = companyRepository.findAll();
+        MultiValueMap<String, String> userAndCompanyData = new LinkedMultiValueMap<>();
+
+        for(Company companyData: company){
+            for(User userData : companyData.getUsers()) {
+                userAndCompanyData.add(userData.getCompany().getName(), userData.getUserId());
+            }
+        }
+
+        return userAndCompanyData;
+    }
+
 }

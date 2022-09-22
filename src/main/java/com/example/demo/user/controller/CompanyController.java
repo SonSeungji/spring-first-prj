@@ -52,4 +52,13 @@ public class CompanyController {
 
         return ResponseEntity.ok().body(res);
     }
+
+    //company별 유저 조회
+    @GetMapping("/info-company-user")
+    public ResponseEntity readCompanyAndUserAll(){
+        MultiValueMap companyEntity = companyService.readCompanyAndUserAll();
+        UserIncludeCompanyDto res = UserIncludeCompanyDto.toDto(companyEntity);
+
+        return ResponseEntity.ok().body(res);
+    }
 }

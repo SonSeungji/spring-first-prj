@@ -1,36 +1,30 @@
 package com.example.demo.user.dto;
 
-import com.example.demo.user.domain.Company;
-import com.example.demo.user.domain.User;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
 
 @Getter @Setter
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 @RequiredArgsConstructor
 public class UserIncludeCompanyDto {
-    private Set companyName;
-    private Collection<User> companyUser;
+
+    private MultiValueMap<String, String> userAndCompanyData = new LinkedMultiValueMap<>();
 
     @Builder
-    public UserIncludeCompanyDto(Set companyName, Collection<User> companyUser) {
-        this.companyName = companyName;
-        this.companyUser = companyUser;
+    public UserIncludeCompanyDto(MultiValueMap<String, String> userAndCompanyData) {
+        this.userAndCompanyData = userAndCompanyData;
     }
 
     public static UserIncludeCompanyDto toDto(MultiValueMap company){
         return UserIncludeCompanyDto.builder()
-                .companyName(company.keySet())
-                .companyUser(company.values())
+                .userAndCompanyData(company)
                 .build();
     }
 }
