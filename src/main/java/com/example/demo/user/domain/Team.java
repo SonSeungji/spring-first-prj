@@ -1,10 +1,6 @@
 package com.example.demo.user.domain;
 
-import com.example.demo.user.dto.TeamDto;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -34,6 +30,12 @@ public class Team {
         this.name = name;
 
         this.user = user;
+    }
+
+    @Builder(builderMethodName = "teamDtoBuilder")
+    public Team(int no, String name) {
+        this.no = no;
+        this.name = name;
     }
 
     public void updateTeamData(Team team) {

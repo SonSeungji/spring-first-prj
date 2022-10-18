@@ -1,7 +1,6 @@
 package com.example.demo.user.dto;
 
 import com.example.demo.user.domain.Team;
-import com.example.demo.user.domain.User;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Builder;
@@ -40,7 +39,7 @@ public class TeamAllDataAndUserIdDto {
                 //value
                 .no(team.getNo())
                 .name(team.getName())
-                .userId(team.getUser().getUserId())
+                .userId(team.getUser() == null ? "no data":team.getUser().getUserId())
                 .build();
     }
 }
