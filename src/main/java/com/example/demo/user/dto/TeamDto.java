@@ -17,10 +17,13 @@ public class TeamDto {
     private int no;
     private String name;
 
+    private String userId;
+
     @Builder
-    public TeamDto(int no, String name){
+    public TeamDto(int no, String name, String userId){
         this.no = no;
         this.name = name;
+        this.userId = userId;
     }
 
     public Team toEntity(){
@@ -36,6 +39,7 @@ public class TeamDto {
                 //value
                 .no(team.getNo())
                 .name(team.getName())
+                .userId(team.getUser() == null ? "no data":team.getUser().getUserId())
                 .build();
     }
 }

@@ -1,10 +1,7 @@
 package com.example.demo.user.controller;
 
 import com.example.demo.user.domain.Team;
-import com.example.demo.user.domain.User;
-import com.example.demo.user.dto.TeamAllDataAndUserIdDto;
 import com.example.demo.user.dto.TeamDto;
-import com.example.demo.user.dto.UserDto;
 import com.example.demo.user.service.TeamService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +34,7 @@ public class TeamController {
     public ResponseEntity readTeam(@PathVariable Integer no){
 
         Team teamData = teamService.readTeam(no);
-        TeamAllDataAndUserIdDto res = TeamAllDataAndUserIdDto.toDto(teamData);
+        TeamDto res = TeamDto.toDto(teamData);
         return ResponseEntity.ok().body(res);
     }
 
