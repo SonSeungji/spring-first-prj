@@ -1,6 +1,7 @@
 package com.example.demo.user.service;
 
 import com.example.demo.user.domain.Company;
+import com.example.demo.user.domain.Team;
 import com.example.demo.user.domain.User;
 import com.example.demo.user.repository.CompanyRepository;
 import com.example.demo.user.repository.UserRepository;
@@ -23,37 +24,79 @@ public class CompanyService {
     private final UserRepository userRepository;
 
     public void createCompany(Company company){
+
+        //insert하려는 데이터가 DB에 존재하는지 확인
+        companyRepository.findByName(company.getName()).
+                ifPresent(data -> {
+                    throw new RuntimeException("이미 존재하는 데이터입니다.");
+                });
         companyRepository.save(company);
     }
 
     public Company readCompany(int no){
-        return companyRepository.findById(no).get();
+
+        //조회하려는 데이터가 DB에 존재하지 않으면 예외 처리
+        return companyRepository.findById(no).orElseThrow(() -> {
+            throw new RuntimeException("존재하지 않는 데이터 입니다.");
+        });
     }
 
     public MultiValueMap readUserAndCompany(int no){
 
+        //조회하려는 데이터가 DB에 존재하지 않으면 예외 처리
+        companyRepository.findById(no).orElseThrow(() -> {
+            throw new RuntimeException("존재하지 않는 데이터 입니다.");
+        });
+
+        //데이터가 존재하면 Company에 속한 user data 조회 처리 진행
         Company companyData = companyRepository.findById(no).get();
 
         MultiValueMap<String, String> userAndCompanyData = new LinkedMultiValueMap<>();
-        for(User userData : companyData.getUsers()){
-            userAndCompanyData.add(userData.getCompany().getName(), userData.getUserId());
+        if(companyData.getUsers().isEmpty() == false) {
+            for(User userData : companyData.getUsers()){
+                userAndCompanyData.add(userData.getCompany().getName(), userData.getUserId());
+            }
+        }else {
+            userAndCompanyData.add(companyData.getName(), "유저 데이터 없음");
         }
 
         return userAndCompanyData;
     }
 
-    public MultiValueMap readCompanyAndUserAll(){
+    public MultiValueMap readUserAndCompanyAll(){
 
         List<Company> company = companyRepository.findAll();
-        MultiValueMap<String, String> userAndCompanyData = new LinkedMultiValueMap<>();
 
+        MultiValueMap<String, String> userAndCompanyData = new LinkedMultiValueMap<>();
         for(Company companyData: company){
-            for(User userData : companyData.getUsers()) {
-                userAndCompanyData.add(userData.getCompany().getName(), userData.getUserId());
+            if(companyData.getUsers().isEmpty() == false) {
+                for(User userData : companyData.getUsers()) {
+                    userAndCompanyData.add(userData.getCompany().getName(), userData.getUserId());
+                }
+            }else{
+                userAndCompanyData.add(companyData.getName(), "유저 데이터 없음");
             }
         }
 
         return userAndCompanyData;
+    }
+
+    public void updateCompany(int no, Company company){
+        Company targetCompanyData = companyRepository.findById(no).orElseThrow(() -> {
+            throw new RuntimeException("존재하지 않는 데이터 입니다.");
+        });
+        targetCompanyData.updateCompanyData(company);
+        companyRepository.save(targetCompanyData);
+    }
+
+    public void deleteCompany(int no){
+        System.out.println(companyRepository.findById(no).get().getName());
+        companyRepository.findById(no).ifPresentOrElse(
+                deleteData -> companyRepository.delete(deleteData),
+                () -> {
+                    throw new RuntimeException("존재하지 않는 데이터 입니다.");
+                }
+        );
     }
 
 }

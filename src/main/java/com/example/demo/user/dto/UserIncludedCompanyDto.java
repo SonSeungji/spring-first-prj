@@ -13,17 +13,17 @@ import org.springframework.util.MultiValueMap;
 @Getter @Setter
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 @RequiredArgsConstructor
-public class UserIncludeCompanyDto {
+public class UserIncludedCompanyDto {
 
     private MultiValueMap<String, String> userAndCompanyData = new LinkedMultiValueMap<>();
 
     @Builder
-    public UserIncludeCompanyDto(MultiValueMap<String, String> userAndCompanyData) {
+    public UserIncludedCompanyDto(MultiValueMap<String, String> userAndCompanyData) {
         this.userAndCompanyData = userAndCompanyData;
     }
 
-    public static UserIncludeCompanyDto toDto(MultiValueMap company){
-        return UserIncludeCompanyDto.builder()
+    public static UserIncludedCompanyDto toDto(MultiValueMap company){
+        return UserIncludedCompanyDto.builder()
                 .userAndCompanyData(company)
                 .build();
     }

@@ -1,25 +1,16 @@
 package com.example.demo.user.controller;
 
 import com.example.demo.user.domain.Company;
-import com.example.demo.user.domain.User;
+import com.example.demo.user.domain.Team;
 import com.example.demo.user.dto.CompanyDto;
-import com.example.demo.user.dto.TeamAllDataAndUserIdDto;
-import com.example.demo.user.dto.UserIncludeCompanyDto;
+import com.example.demo.user.dto.TeamDto;
+import com.example.demo.user.dto.UserIncludedCompanyDto;
 import com.example.demo.user.service.CompanyService;
-import com.example.demo.user.service.UserService;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import java.util.List;
-import java.util.stream.Collectors;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -44,21 +35,36 @@ public class CompanyController {
         return ResponseEntity.ok().body(res);
     }
 
-    //company에 속해있는 유저까지 조회
+    //파라미터로 받은 company에 속해있는 유저 조회
     @GetMapping("/info-company-user/{no}")
     public ResponseEntity readCompanyAndUser(@PathVariable int no){
         MultiValueMap companyEntity = companyService.readUserAndCompany(no);
-        UserIncludeCompanyDto res = UserIncludeCompanyDto.toDto(companyEntity);
+        UserIncludedCompanyDto res = UserIncludedCompanyDto.toDto(companyEntity);
 
         return ResponseEntity.ok().body(res);
     }
 
-    //company별 유저 조회
+    //각 company에 속해있는 유저 조회
     @GetMapping("/info-company-user")
     public ResponseEntity readCompanyAndUserAll(){
-        MultiValueMap companyEntity = companyService.readCompanyAndUserAll();
-        UserIncludeCompanyDto res = UserIncludeCompanyDto.toDto(companyEntity);
+        MultiValueMap companyEntity = companyService.readUserAndCompanyAll();
+        UserIncludedCompanyDto res = UserIncludedCompanyDto.toDto(companyEntity);
 
         return ResponseEntity.ok().body(res);
+    }
+
+    @PutMapping("/update-company/{no}")
+    public ResponseEntity updateTeam(@PathVariable Integer no, @RequestBody CompanyDto company){
+
+        Company companyEntity = company.toEntity();
+        companyService.updateCompany(no, companyEntity);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/delete-company/{no}")
+    public ResponseEntity deleteTeam(@PathVariable Integer no){
+
+        companyService.deleteCompany(no);
+        return ResponseEntity.ok().build();
     }
 }

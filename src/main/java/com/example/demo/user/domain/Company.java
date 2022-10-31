@@ -31,5 +31,8 @@ public class Company {
         this.name = name;
     }
 
+    public void updateCompanyData(Company company) {
+        this.name = company.getName();
 
+    }
 }
