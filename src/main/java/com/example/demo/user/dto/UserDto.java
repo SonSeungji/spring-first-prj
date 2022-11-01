@@ -24,7 +24,6 @@ public class UserDto {
     private String userPassword;
     private String email;
     private ActiveFlg activeFlg;
-    //private List<UserDto> users;
     private TeamDto teamTableData;
     private CompanyDto companyTableData;
 
@@ -39,7 +38,6 @@ public class UserDto {
         this.userPassword = userPassword;
         this.email = email;
         this.activeFlg = activeFlg;
-        //this.users = users;
         this.teamTableData = teamTableData;
         this.companyTableData = companyTableData;
     }
@@ -56,8 +54,9 @@ public class UserDto {
                 .userPassword(this.userPassword)
                 .email(this.email)
                 .activeFlg(this.activeFlg)
-                .team(this.teamTableData.toEntity())
-                .company(this.companyTableData.toEntity())
+                .team(this.teamTableData.toEntity() == null ? null : this.teamTableData.toEntity())
+                .company(this.companyTableData.toEntity() == null ? null : this.companyTableData.toEntity())
+
                 .build();
     }
 
