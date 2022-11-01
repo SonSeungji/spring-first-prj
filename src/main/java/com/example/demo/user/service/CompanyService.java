@@ -44,12 +44,9 @@ public class CompanyService {
     public MultiValueMap readUserAndCompany(int no){
 
         //조회하려는 데이터가 DB에 존재하지 않으면 예외 처리
-        companyRepository.findById(no).orElseThrow(() -> {
+        Company companyData = companyRepository.findById(no).orElseThrow(() -> {
             throw new RuntimeException("존재하지 않는 데이터 입니다.");
         });
-
-        //데이터가 존재하면 Company에 속한 user data 조회 처리 진행
-        Company companyData = companyRepository.findById(no).get();
 
         MultiValueMap<String, String> userAndCompanyData = new LinkedMultiValueMap<>();
         if(companyData.getUsers().isEmpty() == false) {
