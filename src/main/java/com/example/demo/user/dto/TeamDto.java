@@ -14,13 +14,13 @@ import lombok.Setter;
 public class TeamDto {
 
     //key
-    private int no;
+    private Integer no;
     private String name;
 
     private String userId;
 
     @Builder
-    public TeamDto(int no, String name, String userId){
+    public TeamDto(Integer no, String name, String userId){
         this.no = no;
         this.name = name;
         this.userId = userId;

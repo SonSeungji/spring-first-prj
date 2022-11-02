@@ -18,5 +18,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     User findByUserIdAndNo(String userId, int no);
 
     Optional<User> findByUserId(String userId);
+
     List<User> findByActiveFlg(ActiveFlg activeFlg);
+
+    User findByTeamNo(int no);
 }

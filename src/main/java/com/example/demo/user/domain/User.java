@@ -69,10 +69,15 @@ public class User {
         this.activeFlg = user.getActiveFlg();
 
         this.team.updateTeamData(user.getTeam());
+        this.company.updateCompanyData(user.getCompany());
     }
 
     public void deleteUser(ActiveFlg active_flg){
         this.activeFlg = active_flg;
+    }
+
+    public void updateUserForDelete(){
+        this.team = null;
     }
 
 

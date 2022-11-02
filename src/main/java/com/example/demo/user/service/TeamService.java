@@ -1,7 +1,9 @@
 package com.example.demo.user.service;
 
 import com.example.demo.user.domain.Team;
+import com.example.demo.user.domain.User;
 import com.example.demo.user.repository.TeamRepository;
+import com.example.demo.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 public class TeamService {
 
     private final TeamRepository teamRepository;
+    private final UserRepository userRepository;
 
     public void createTeam(Team team){
 
@@ -39,7 +42,17 @@ public class TeamService {
 
     public void deleteTeam(int no){
         teamRepository.findById(no).ifPresentOrElse(
-                deleteData -> teamRepository.delete(deleteData),
+                deleteData -> {
+                    // user 테이블의 team_id(fk)를 null로 업데이트
+                    User byTeamNo = userRepository.findByTeamNo(no);
+                    if(byTeamNo != null){
+                        byTeamNo.updateUserForDelete();
+                        userRepository.save(byTeamNo);
+                    }
+
+                    // team 테이블의 데이터 삭제
+                    teamRepository.deleteById(no);
+                },
                 () -> {
                     throw new RuntimeException("존재하지 않는 데이터 입니다.");
                 }

@@ -13,7 +13,7 @@ public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "no")
-    private int no;
+    private Integer no;
 
     @Column(name = "name")
     private String name;
@@ -25,21 +25,20 @@ public class Team {
     private User user;
 
     @Builder
-    public Team(int no, String name, User user) {
-        this.no = no;
+    public Team(Integer no, String name, User user) {
+        this.no = this == null ? null : this.no;
         this.name = name;
 
         this.user = user;
     }
 
     @Builder(builderMethodName = "teamDtoBuilder")
-    public Team(int no, String name) {
-        this.no = no;
+    public Team(Integer no, String name) {
+        this.no = this == null ? null : this.no;
         this.name = name;
     }
 
     public void updateTeamData(Team team) {
         this.name = team.getName();
-
     }
 }

@@ -54,8 +54,8 @@ public class UserDto {
                 .userPassword(this.userPassword)
                 .email(this.email)
                 .activeFlg(this.activeFlg)
-                .team(this.teamTableData.toEntity() == null ? null : this.teamTableData.toEntity())
-                .company(this.companyTableData.toEntity() == null ? null : this.companyTableData.toEntity())
+                .team(this.teamTableData == null ? null : this.teamTableData.toEntity())
+                .company(this.companyTableData == null ? null : this.companyTableData.toEntity())
 
                 .build();
     }
