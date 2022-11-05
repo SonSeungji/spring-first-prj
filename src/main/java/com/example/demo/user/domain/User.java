@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -47,6 +48,10 @@ public class User {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "company_no") // 외래키
     private Company company;
+
+    // @ManyToMany를 사용하면, 나중에 연결 테이블(중간 테이블)에 컬럼 추가 불가
+    //@ManyToMany(mappedBy = "user")
+    //private List<Product> product;
 
     @Builder //생성자에 parameter가 많아지면 사용하는 어노테이션..?
     public User(int no, String name, String userId, String userPassword, String email, ActiveFlg activeFlg, Team team, Company company) {

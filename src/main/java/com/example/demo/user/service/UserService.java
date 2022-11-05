@@ -1,10 +1,12 @@
 package com.example.demo.user.service;
 
 import com.example.demo.user.domain.Company;
+import com.example.demo.user.domain.Order;
 import com.example.demo.user.domain.Team;
 import com.example.demo.user.domain.User;
 import com.example.demo.user.model.ActiveFlg;
 import com.example.demo.user.repository.CompanyRepository;
+import com.example.demo.user.repository.OrderRepository;
 import com.example.demo.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,8 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final CompanyRepository companyRepository;
+
+    private final OrderRepository orderRepository;
 
     //유저로 부터 받은 정보를 디비에 저장
     public void createUser(User user) {
@@ -153,4 +157,13 @@ public class UserService {
         userRepository.delete(deleteUserData);
     }
 
+
+    public void createOrder(List<Order> order) {
+
+        for(Order orderData : order) {
+            orderRepository.save(orderData);
+        }
+
+
+    }
 }
