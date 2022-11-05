@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Getter @Setter
@@ -28,11 +29,15 @@ public class Order {
     @JoinColumn(name = "product_no") // 외래키
     private Product product;
 
+    @Column(name = "order_date")
+    private Date orderDate;
+
     @Builder
-    public Order(int no, User user, Product product){
+    public Order(int no, User user, Product product, Date orderDate){
         this.no = no;
         this.user = user;
         this.product = product;
+        this.orderDate = orderDate;
     }
 
 }

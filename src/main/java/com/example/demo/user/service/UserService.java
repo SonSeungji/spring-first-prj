@@ -1,8 +1,6 @@
 package com.example.demo.user.service;
 
-import com.example.demo.user.domain.Company;
 import com.example.demo.user.domain.Order;
-import com.example.demo.user.domain.Team;
 import com.example.demo.user.domain.User;
 import com.example.demo.user.model.ActiveFlg;
 import com.example.demo.user.repository.CompanyRepository;
@@ -11,7 +9,6 @@ import com.example.demo.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -159,11 +156,11 @@ public class UserService {
 
 
     public void createOrder(List<Order> order) {
+        Date now = new Date();
 
         for(Order orderData : order) {
+            orderData.setOrderDate(now);
             orderRepository.save(orderData);
         }
-
-
     }
 }
