@@ -1,5 +1,4 @@
 package com.example.demo.user.model;
-import com.example.demo.user.dto.UserDto;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Builder;
@@ -15,10 +14,10 @@ import java.util.List;
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class ListWrapper<T> {
 
-    private List<T> users;
+    private List<T> dataList;
 
     @Builder
-    public ListWrapper(List<T> users){
-        this.users = users;
+    public ListWrapper(List<T> dataList){
+        this.dataList = dataList;
     }
 }

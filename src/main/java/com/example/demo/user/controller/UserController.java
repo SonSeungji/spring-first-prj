@@ -48,8 +48,7 @@ public class UserController {
     @PostMapping("/create-users")
     public ResponseEntity createUsers(@RequestBody ListWrapper<UserDto> users) {
 
-        System.out.println(users.getUsers());
-        List<User> insertUserData = users.getUsers().stream()
+        List<User> insertUserData = users.getDataList().stream()
                 .map(userData -> userData.toEntity())
                 //.filter(user -> user.getUserId().equals(1))
                 .collect(Collectors.toList());
@@ -65,7 +64,7 @@ public class UserController {
     @PostMapping("/create-users-and-company")
     public ResponseEntity createManyUserOneCompany(@RequestBody ListWrapper<UserDto> users) {
 
-        List<User> insertUserData = users.getUsers().stream()
+        List<User> insertUserData = users.getDataList().stream()
                 .map(userData -> userData.toEntity())
                 .collect(Collectors.toList());
 
