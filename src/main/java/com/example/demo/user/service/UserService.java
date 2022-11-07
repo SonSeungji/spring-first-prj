@@ -1,6 +1,7 @@
 package com.example.demo.user.service;
 
 import com.example.demo.user.domain.Order;
+import com.example.demo.user.domain.Product;
 import com.example.demo.user.domain.User;
 import com.example.demo.user.model.ActiveFlg;
 import com.example.demo.user.repository.CompanyRepository;
@@ -8,6 +9,8 @@ import com.example.demo.user.repository.OrderRepository;
 import com.example.demo.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -141,7 +144,6 @@ public class UserService {
     }
 
 
-
     public void deleteUser(ActiveFlg active_flg, int no) {
         Optional<User> userTableData = userRepository.findById(no);
         userTableData.orElseThrow(RuntimeException::new).deleteUser(active_flg);
@@ -162,5 +164,19 @@ public class UserService {
             orderData.setOrderDate(now);
             orderRepository.save(orderData);
         }
+    }
+
+    public MultiValueMap readUserOrderList(int no){
+        User userData = userRepository.findById(no)
+                .orElseThrow(() -> {
+                    throw new RuntimeException("존재하지 않는 유저입니다.");
+                });
+
+        MultiValueMap<String, String> userOrderProductList = new LinkedMultiValueMap<>();
+        for(Order orderData : userData.getOrder()) {
+            userOrderProductList.add(userData.getUserId(), orderData.getProduct().getName());
+        }
+
+        return userOrderProductList;
     }
 }

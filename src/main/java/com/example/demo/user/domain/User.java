@@ -52,6 +52,8 @@ public class User {
     // @ManyToMany를 사용하면, 나중에 연결 테이블(중간 테이블)에 컬럼 추가 불가
     //@ManyToMany(mappedBy = "user")
     //private List<Product> product;
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Order> order;
 
     @Builder //생성자에 parameter가 많아지면 사용하는 어노테이션..?
     public User(int no, String name, String userId, String userPassword, String email, ActiveFlg activeFlg, Team team, Company company) {

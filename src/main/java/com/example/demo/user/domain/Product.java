@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -24,11 +25,12 @@ public class Product {
     @Column(name = "code")
     private String code;
 
-//    // @ManyToMany를 사용하면, 나중에 연결 테이블(중간 테이블)에 컬럼 추가 불가
 //    @ManyToMany
 //    @JoinTable(name="user_product", joinColumns = @JoinColumn( name = "product_id"),
-//            inverseJoinColumns = @JoinColumn(name="user_id"))
+//            inverseJoinColumns = @JoinColumn(name="user_id")) // <- 이렇게 테이블 만들면 매핑 테이블(중간 테이블)에 별도 컬럼 추가 불가
 //    private List<User> user;
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    private List<Order> order;
 
     @Builder
     public Product(int no, String name, String code) {

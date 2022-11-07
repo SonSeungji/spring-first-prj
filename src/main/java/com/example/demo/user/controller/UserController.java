@@ -3,6 +3,7 @@ package com.example.demo.user.controller;
 import com.example.demo.user.domain.User;
 import com.example.demo.user.dto.UserDto;
 import com.example.demo.user.dto.EnabledUserListDto;
+import com.example.demo.user.dto.UserOrderProductListDto;
 import com.example.demo.user.model.ActiveFlg;
 import com.example.demo.user.model.ListWrapper;
 import com.example.demo.user.service.UserService;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -99,6 +101,16 @@ public class UserController {
 
         return ResponseEntity.ok().body(userInfoData);
         //return ResponseEntity.ok().body(new Gson().toJson(userData));
+    }
+
+
+   @GetMapping("/info-user-order-list/{no}")
+    public ResponseEntity readUserOrderList (@PathVariable int no) {
+
+       MultiValueMap userOrderProductList = userService.readUserOrderList(no);
+       UserOrderProductListDto resData = UserOrderProductListDto.toDto(userOrderProductList);
+
+       return ResponseEntity.ok().body(resData);
     }
 
 
