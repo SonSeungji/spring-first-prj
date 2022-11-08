@@ -1,0 +1,568 @@
+{
+	"info": {
+		"_postman_id": "ebb3d613-ba04-4083-95ed-cedde45eb3e0",
+		"name": "spring-first-prj_api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16271967"
+	},
+	"item": [
+		{
+			"name": "Company",
+			"item": [
+				{
+					"name": "create-company",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"company3\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/create-company",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"create-company"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "info-company/1",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8081/info-company/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"info-company",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "info-company-user/1",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8081/info-company-user/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"info-company-user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "info-company-user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8081/info-company-user",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"info-company-user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-company/1",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"company1-update\",\n    \"user_table_data\" : {\n        \"user_id\" : \"sonsj\",\n        \"user_password\" : \"3333\",\n        \"name\" : \"default\",\n        \"email\" : \"sonsj33@gmail.com\",\n        \"active_flg\" : \"ENABLE\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/update-company/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"update-company",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete-company/1",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:8081/delete-company/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"delete-company",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "create-user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\" : \"sonsj2\",\n    \"user_password\" : \"0000\",\n    \"name\" : \"default\",\n    \"email\" : \"sonsj@gmail.com\",\n    \"active_flg\" : \"ENABLE\",\n    \"team_table_data\" : {\n        \"name\" : \"team1-1\"\n    },\n    \"company_table_data\" : {\n        \"name\" : \"company2\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/create-user",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"create-user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create-users",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"users\": [\n        {\n            \"user_id\" : \"sonsj1\",\n            \"user_password\" : \"1111\",\n            \"name\" : \"test_1_first\",\n            \"email\" : \"sonsj1@gmail.com\",\n            \"active_flg\" : \"DISABLE\"\n        },\n        {\n            \"user_id\" : \"sonsj2\",\n            \"user_password\" : \"2222\",\n            \"name\" : \"test_2_first\",\n            \"email\" : \"sonsj2@gmail.com\",\n            \"active_flg\" : \"ENABLE\"\n        },\n        {\n            \"user_id\" : \"sonsj3\",\n            \"user_password\" : \"3333\",\n            \"name\" : \"test_3_first\",\n            \"email\" : \"sonsj3@gmail.com\",\n            \"active_flg\" : \"ENABLE\"\n        },\n        {\n            \"user_id\" : \"sonsj2\",\n            \"user_password\" : \"2222\",\n            \"name\" : \"test_2_second\",\n            \"email\" : \"sonsj2@gmail.com\",\n            \"active_flg\" : \"ENABLE\"\n        },\n        {\n            \"user_id\" : \"sonsj4\",\n            \"user_password\" : \"4444\",\n            \"name\" : \"test_4_first\",\n            \"email\" : \"sonsj4@gmail.com\",\n            \"active_flg\" : \"DISABLE\"\n        },\n        {\n            \"user_id\" : \"sonsj1\",\n            \"user_password\" : \"0000\",\n            \"name\" : \"test_1_second\",\n            \"email\" : \"sonsj0@gmail.com\",\n            \"active_flg\" : \"ENABLE\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/create-users",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"create-users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create-users-and-company",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data_list\": [\n        {\n            \"user_id\" : \"sonsj1\",\n            \"user_password\" : \"1111\",\n            \"name\" : \"test_1_first\",\n            \"email\" : \"sonsj1@gmail.com\",\n            \"active_flg\" : \"DISABLE\",\n            \"team_table_data\" : {\n                \"name\" : \"team1\"\n            },\n            \"company_table_data\" : {\n                \"name\" : \"company1\"\n            }\n        },\n        {\n            \"user_id\" : \"sonsj2\",\n            \"user_password\" : \"2222\",\n            \"name\" : \"test_2_first\",\n            \"email\" : \"sonsj2@gmail.com\",\n            \"active_flg\" : \"ENABLE\",\n            \"team_table_data\" : {\n                \"name\" : \"team2\"\n            },\n            \"company_table_data\" : {\n                \"name\" : \"company2\"\n            }\n        },\n        {\n            \"user_id\" : \"sonsj3\",\n            \"user_password\" : \"3333\",\n            \"name\" : \"test_3_first\",\n            \"email\" : \"sonsj3@gmail.com\",\n            \"active_flg\" : \"ENABLE\",\n            \"team_table_data\" : {\n                \"name\" : \"team3\"\n            },\n            \"company_table_data\" : {\n                \"name\" : \"company1\"\n            }\n        },\n        {\n            \"user_id\" : \"sonsj2\",\n            \"user_password\" : \"2222\",\n            \"name\" : \"test_2_second\",\n            \"email\" : \"sonsj2@gmail.com\",\n            \"active_flg\" : \"ENABLE\",\n            \"team_table_data\" : {\n                \"name\" : \"team-error\"\n            },\n            \"company_table_data\" : {\n                \"name\" : \"company1\"\n            }\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/create-users-and-company",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"create-users-and-company"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-user",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\" : \"sonsj1\",\n    \"user_password\" : \"1111-update\",\n    \"name\" : \"test_1_first-update\",\n    \"email\" : \"sonsj1@gmail.com-update\",\n    \"active_flg\" : \"DISABLE\",\n    \"team_table_data\" : {\n        //\"name\" : \"team1-update\"\n    },\n    \"company_table_data\" : {\n        \"name\" : \"company1-update\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/update-user",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"update-user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "info-user/active-status?active_flg=ENABLE",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/info-user/active-status?active_flg=DISABLE",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"info-user",
+								"active-status"
+							],
+							"query": [
+								{
+									"key": "active_flg",
+									"value": "DISABLE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "info-user/1",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/info-user/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"info-user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete-user/1?active_flg=DISABLE",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/delete-user/1?active_flg=DISABLE",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"delete-user",
+								"1"
+							],
+							"query": [
+								{
+									"key": "active_flg",
+									"value": "DISABLE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete-user/1",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:8081/hard-delete-user/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"hard-delete-user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Team",
+			"item": [
+				{
+					"name": "create-team",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"aaa\",\n    \"user_table_info\" : {\n        \"user_id\" : \"sonsj1\",\n        \"user_password\" : \"1111\",\n        \"name\" : \"test_1_first\",\n        \"email\" : \"sonsj1@gmail.com\",\n        \"active_flg\" : \"DISABLE\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/create-team/",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"create-team",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "info-team/1",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8081/info-team/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"info-team",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-team/1",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"team name 3333\",\n    \"user_table_data\" : {\n        \"user_id\" : \"sonsj\",\n        \"user_password\" : \"3333\",\n        \"name\" : \"default\",\n        \"email\" : \"sonsj33@gmail.com\",\n        \"active_flg\" : \"ENABLE\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/update-team/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"update-team",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete-team/1",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:8081/delete-team/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"delete-team",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "create-product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data_list\": [\n        {\"name\" : \"product1\", \"code\" : \"pd0001\"},\n        {\"name\" : \"product2\", \"code\" : \"pd0002\"},\n        {\"name\" : \"product3\", \"code\" : \"pd0003\"},\n        {\"name\" : \"product4\", \"code\" : \"pd0004\"}\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/create-product",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"create-product"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "create-order",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data_list\": [\n        {\"user_no\" : {\"no\" : 1}, \"product_no\" : {\"no\" : 1}},\n        {\"user_no\" : {\"no\" : 1}, \"product_no\" : {\"no\" : 2}},\n        {\"user_no\" : {\"no\" : 1}, \"product_no\" : {\"no\" : 3}},\n        {\"user_no\" : {\"no\" : 2}, \"product_no\" : {\"no\" : 3}},\n        {\"user_no\" : {\"no\" : 3}, \"product_no\" : {\"no\" : 3}},\n        {\"user_no\" : {\"no\" : 3}, \"product_no\" : {\"no\" : 3}}\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/create-order",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"create-order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "\binfo-user-order-list/1",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/info-user-order-list/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"info-user-order-list",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
