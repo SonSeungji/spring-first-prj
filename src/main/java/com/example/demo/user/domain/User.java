@@ -88,8 +88,12 @@ public class User {
         this.activeFlg = active_flg;
     }
 
-    public void updateUserForDelete(){
+    public void updateUserForDeleteTeam(){
         this.team = null;
+    }
+
+    public void updateUserForDeleteCompany(){
+        this.company = null;
     }
 
 

@@ -22,4 +22,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     List<User> findByActiveFlg(ActiveFlg activeFlg);
 
     User findByTeamNo(int no);
+
+    List<User> findByCompanyNo(int no);
 }

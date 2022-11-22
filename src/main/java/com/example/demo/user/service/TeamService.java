@@ -46,7 +46,7 @@ public class TeamService {
                     // user 테이블의 team_id(fk)를 null로 업데이트
                     User byTeamNo = userRepository.findByTeamNo(no);
                     if(byTeamNo != null){
-                        byTeamNo.updateUserForDelete();
+                        byTeamNo.updateUserForDeleteTeam();
                         userRepository.save(byTeamNo);
                     }
 

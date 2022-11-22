@@ -87,9 +87,21 @@ public class CompanyService {
     }
 
     public void deleteCompany(int no){
-        System.out.println(companyRepository.findById(no).get().getName());
         companyRepository.findById(no).ifPresentOrElse(
-                deleteData -> companyRepository.delete(deleteData),
+                deleteData -> {
+                    // user 테이블의 company_id(fk)를 null로 업데이트
+                    List<User> byCompanyNo = userRepository.findByCompanyNo(no);
+                    for (User userData : byCompanyNo) {
+                        if(userData != null) {
+                            userData.updateUserForDeleteCompany();
+                            userRepository.save(userData);
+                        }
+
+                        //company 테이블의 데이터 삭제
+                        companyRepository.deleteById(no);
+                    }
+
+                },
                 () -> {
                     throw new RuntimeException("존재하지 않는 데이터 입니다.");
                 }
