@@ -18,11 +18,11 @@ import java.util.List;
 public class CompanyDto {
 
     //key
-    private int no;
+    private Integer no;
     private String name;
 
     @Builder
-    public CompanyDto(int no, String name){
+    public CompanyDto(Integer no, String name){
         this.no = no;
         this.name = name;
     }

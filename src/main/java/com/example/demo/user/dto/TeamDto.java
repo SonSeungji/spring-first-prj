@@ -42,4 +42,11 @@ public class TeamDto {
                 .userId(team.getUser() == null ? "no data":team.getUser().getUserId())
                 .build();
     }
+
+    public static TeamDto toDtoInUser(Team team){
+        return TeamDto.builder()
+                .no(team.getNo() == null ? null : team.getNo())
+                .name(team.getName())
+                .build();
+    }
 }

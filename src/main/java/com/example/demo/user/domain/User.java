@@ -75,8 +75,13 @@ public class User {
         this.email = user.getEmail();
         this.activeFlg = user.getActiveFlg();
 
-        this.team.updateTeamData(user.getTeam());
-        this.company.updateCompanyData(user.getCompany());
+        if (this.team != null) {
+            this.team.updateTeamData(user.getTeam());
+        }
+
+        if (this.company != null) {
+            this.company.updateCompanyData(user.getCompany());
+        }
     }
 
     public void deleteUser(ActiveFlg active_flg){

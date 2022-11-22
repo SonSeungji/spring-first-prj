@@ -17,7 +17,7 @@ public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "no")
-    private int no;
+    private Integer no;
 
     @Column(name = "name")
     private String name;
@@ -26,8 +26,8 @@ public class Company {
     private List<User> users;
 
     @Builder
-    public Company(int no, String name){
-        this.no = no;
+    public Company(Integer no, String name){
+        this.no = this == null ? null : this.no;
         this.name = name;
     }
 

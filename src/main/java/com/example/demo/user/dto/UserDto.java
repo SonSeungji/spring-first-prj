@@ -68,8 +68,8 @@ public class UserDto {
                 .userId(user.getUserId())
                 .email(user.getEmail())
                 .activeFlg(user.getActiveFlg())
-                .teamTableData(TeamDto.toDto(user.getTeam())) //FetchType.LAZY
-                .companyTableData(CompanyDto.toDto(user.getCompany()))
+                .teamTableData(user.getTeam() == null ? null : TeamDto.toDtoInUser(user.getTeam())) //FetchType.LAZY
+                .companyTableData(user.getCompany() == null ? null : CompanyDto.toDto(user.getCompany()))
                 //teamDto.toDto에 user정보+team정보가 있는 userDto를 불러와서 아래처럼 나옴
                 //                              "no": 0,
                                         //    "name": "default",
