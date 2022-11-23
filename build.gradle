@@ -1,7 +1,13 @@
+buildscript {
+	ext {
+		queryDslVersion = "5.0.0" //queryDsl version 정보 추가
+	}
+}
+
 plugins {
 	id 'org.springframework.boot' version '2.7.1'
-	// 'io.spring.dependency-management' 플러그인 사용하면, 자동으로 spring-boot-starter-parent을 import 해줌
-	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE' //자동으로 spring-boot-starter-parent을 import 해줌
+	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10" // queryDsl 플러그인 추가
 	id 'java'
 }
 
@@ -43,9 +49,41 @@ dependencies {
 	// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
 	//implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.0.1'
 
+	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}" //querydsl dependencies 추가
+	implementation "com.querydsl:querydsl-apt:${queryDslVersion}" //querydsl dependencies 추가
 
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+
+
+// querydsl 사용할 경로 지정
+// 현재 지정한 부분은 .gitignore에 포함됨
+def querydslDir = "$buildDir/generated/'querydsl'"
+
+// JPA 사용여부 및 사용 경로 설정
+querydsl {
+	jpa = true
+	querydslSourcesDir = querydslDir
+}
+
+// build시 사용할 sourceSet 추가 설정
+sourceSets {
+	main.java.srcDir querydslDir
+}
+
+// querydsl 컴파일 시 사용할 옵션 설정
+compileQuerydsl {
+	options.annotationProcessorPath = configurations.querydsl
+}
+
+// querydsl이 compileClassPath를 상속하도록 설정
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+	querydsl.extendsFrom compileClasspath
 }

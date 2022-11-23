@@ -2,16 +2,23 @@ package com.example.demo.user.service;
 
 import com.example.demo.user.domain.Order;
 import com.example.demo.user.domain.Product;
+import com.example.demo.user.domain.QUser;
 import com.example.demo.user.domain.User;
+import com.example.demo.user.dto.UserDto;
 import com.example.demo.user.model.ActiveFlg;
 import com.example.demo.user.repository.CompanyRepository;
 import com.example.demo.user.repository.OrderRepository;
 import com.example.demo.user.repository.UserRepository;
+import com.querydsl.jpa.JPQLQueryFactory;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceContext;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -22,8 +29,10 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final CompanyRepository companyRepository;
-
     private final OrderRepository orderRepository;
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     //유저로 부터 받은 정보를 디비에 저장
     public void createUser(User user) {
@@ -35,19 +44,18 @@ public class UserService {
                 throw new RuntimeException("이미 존재");
              });
 
-       companyRepository.findByName(user.getCompany().getName())
-               .ifPresent(m ->{
-                   //user 테이블에서는 company_id만 외래키로 사용하지만,
-                   // setCompany에 set하는 company는 오브젝트 형이여서, company에 들어있는 id, name을 모두 넘겨줘야함
-                   user.setCompany(m);
-               });
+//        //~~~~~~~~삭제 예정~~~~~~~~~~~~~~
+//        companyRepository.findByName(user.getCompany().getName())
+//                .ifPresent(m ->{
+//                   //user 테이블에서는 company_id만 외래키로 사용하지만,
+//                   // setCompany에 set하는 company는 오브젝트 형이여서, company에 들어있는 id, name을 모두 넘겨줘야함
+//                   user.setCompany(m);
+//               });
+//        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         // todo: 2. User를 저장한다.
-        userRepository.save(user);
-
         //userRepository가 상속받고 있는 jpaRepository내 save 기능을 사용하여, user 데이터를 저장
-        //userRepository.save(user);
-
+        userRepository.save(user);
     }
 
 
@@ -178,5 +186,22 @@ public class UserService {
         }
 
         return userOrderProductList;
+    }
+
+
+    public List searchUser(UserDto keywordUserData) {
+
+        JPQLQueryFactory query = new JPAQueryFactory(entityManager);
+        QUser searchUserData = QUser.user;
+        List<User> resultData = query.select(searchUserData)
+                .from(searchUserData)
+                .where(
+                        searchUserData.userId.startsWith(keywordUserData.getUserId()),
+                        searchUserData.email.contains(keywordUserData.getEmail())
+                )
+                .orderBy(searchUserData.userId.desc())
+                .fetch();
+
+        return resultData;
     }
 }

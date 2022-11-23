@@ -15,9 +15,13 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+
+import static com.example.demo.user.domain.QUser.user;
 
 @Controller
 @RequiredArgsConstructor
@@ -141,4 +145,16 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
+
+    @GetMapping("/search-user")
+    public ResponseEntity searchUser(@RequestBody UserDto keywordUserData) {
+        List<User> resultUserData = userService.searchUser(keywordUserData);
+
+        List<UserDto> userInfoData = new ArrayList();
+        for(User res:resultUserData){
+            userInfoData.add(UserDto.toDto(res));
+        }
+
+        return ResponseEntity.ok().body(userInfoData);
+    }
 }
