@@ -1,7 +1,6 @@
 package com.example.demo.user.service;
 
 import com.example.demo.user.domain.Order;
-import com.example.demo.user.domain.Product;
 import com.example.demo.user.domain.QUser;
 import com.example.demo.user.domain.User;
 import com.example.demo.user.dto.UserDto;
@@ -44,14 +43,15 @@ public class UserService {
                 throw new RuntimeException("이미 존재");
              });
 
-//        //~~~~~~~~삭제 예정~~~~~~~~~~~~~~
-//        companyRepository.findByName(user.getCompany().getName())
-//                .ifPresent(m ->{
-//                   //user 테이블에서는 company_id만 외래키로 사용하지만,
-//                   // setCompany에 set하는 company는 오브젝트 형이여서, company에 들어있는 id, name을 모두 넘겨줘야함
-//                   user.setCompany(m);
-//               });
-//        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        // 유저 등록 시, 이미 존재하는 company를 사용하는 경우, company 데이터는 insert되지 않게 처리
+        if(user.getCompany() != null) {
+            companyRepository.findByName(user.getCompany().getName())
+                    .ifPresent(m -> {
+                        //user 테이블에서는 company_id만 외래키로 사용하지만,
+                        // setCompany에 set하는 company는 오브젝트 형이여서, company에 들어있는 id, name을 모두 넘겨줘야함
+                        user.setCompany(m);
+                    });
+        }
 
         // todo: 2. User를 저장한다.
         //userRepository가 상속받고 있는 jpaRepository내 save 기능을 사용하여, user 데이터를 저장
@@ -132,6 +132,11 @@ public class UserService {
 
 
     public User readUser(int no) {
+
+        userRepository.findById(no).orElseThrow(() -> {
+            throw new NoSuchElementException("존재하지 않는 유저입니다.");
+        });
+
         return userRepository.findById(no).get();
     }
 
@@ -160,8 +165,43 @@ public class UserService {
     }
 
     public void hardDeleteUser(int no){
-        User deleteUserData = userRepository.findById(no).get();
-        userRepository.delete(deleteUserData);
+
+        User user = userRepository.findById(no).orElseThrow(() -> {
+            throw new RuntimeException("존재하지 않는 유저입니다.");
+        });
+
+        //삭제하려는 유저가 속해있는 company에 다른 유저도 속해있는지 검색
+        if(user.getCompany() != null) {
+            JPQLQueryFactory query = new JPAQueryFactory(entityManager);
+            QUser searchUserData = QUser.user;
+            List<User> resData = query.select(searchUserData)
+                    .from(searchUserData)
+                    .where(
+                            searchUserData.company.no.eq(
+                                    user.getCompany().getNo()
+                            )
+                    )
+                    .fetch();
+
+            //삭제하려는 유저가 속해있는 company에 다른 유저가 속해있으면
+            if(resData.size() > 1){
+                for(User userSearchResData:resData){
+                    //삭제하려는 유저 데이터 내 company 데이터를 null로 업데이트 후, 대상 유저 데이터 삭제
+                    if(userSearchResData.getNo() == no) {
+
+                        userSearchResData.updateUserForDeleteCompany();
+                        userRepository.save(userSearchResData);
+
+                        userRepository.delete(userRepository.findById(no).get());
+                    }
+                }
+            }else {
+                userRepository.delete(user);
+            }
+        } else {
+            userRepository.delete(user);
+        }
+
     }
 
 
