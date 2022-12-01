@@ -1,23 +1,18 @@
 package com.example.demo.user.service;
 
 import com.example.demo.user.domain.Order;
-import com.example.demo.user.domain.QUser;
 import com.example.demo.user.domain.User;
 import com.example.demo.user.dto.UserDto;
 import com.example.demo.user.model.ActiveFlg;
 import com.example.demo.user.repository.CompanyRepository;
 import com.example.demo.user.repository.OrderRepository;
+import com.example.demo.user.repository.QueryRepository;
 import com.example.demo.user.repository.UserRepository;
-import com.querydsl.jpa.JPQLQueryFactory;
-import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceContext;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -29,9 +24,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final CompanyRepository companyRepository;
     private final OrderRepository orderRepository;
-
-    @PersistenceContext
-    private EntityManager entityManager;
+    private final QueryRepository queryRepository;
 
     //유저로 부터 받은 정보를 디비에 저장
     public void createUser(User user) {
@@ -172,16 +165,7 @@ public class UserService {
 
         //삭제하려는 유저가 속해있는 company에 다른 유저도 속해있는지 검색
         if(user.getCompany() != null) {
-            JPQLQueryFactory query = new JPAQueryFactory(entityManager);
-            QUser searchUserData = QUser.user;
-            List<User> resData = query.select(searchUserData)
-                    .from(searchUserData)
-                    .where(
-                            searchUserData.company.no.eq(
-                                    user.getCompany().getNo()
-                            )
-                    )
-                    .fetch();
+            List<User> resData = queryRepository.searchUserCompanyCount();
 
             //삭제하려는 유저가 속해있는 company에 다른 유저가 속해있으면
             if(resData.size() > 1){
@@ -228,20 +212,7 @@ public class UserService {
         return userOrderProductList;
     }
 
-
     public List searchUser(UserDto keywordUserData) {
-
-        JPQLQueryFactory query = new JPAQueryFactory(entityManager);
-        QUser searchUserData = QUser.user;
-        List<User> resultData = query.select(searchUserData)
-                .from(searchUserData)
-                .where(
-                        searchUserData.userId.startsWith(keywordUserData.getUserId()),
-                        searchUserData.email.contains(keywordUserData.getEmail())
-                )
-                .orderBy(searchUserData.userId.desc())
-                .fetch();
-
-        return resultData;
+        return queryRepository.searchUser(keywordUserData.getUserId(), keywordUserData.getEmail());
     }
 }
